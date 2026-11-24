@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zymebind"
+version = "1.0.0"
+description = "Presence-aware multimodal deep learning framework for enzyme EC number prediction, zero-shot unseen-EC retrieval, and mechanistic interpretability."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Chen Chen", email = "nxsfcc@nxnu.edu.cn" },
+    { name = "Hongbo Zhou" },
+    { name = "Zishang Gao" },
+    { name = "Qifu Li" },
+    { name = "Yanshan Tian", email = "tianysh@nxnu.edu.cn" },
+]
+keywords = [
+    "enzyme-function-prediction",
+    "ec-number",
+    "multimodal-learning",
+    "protein-language-model",
+    "zero-shot-learning",
+    "mechanistic-interpretability",
+    "bioinformatics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.26.0",
+    "scipy>=1.13.0",
+    "pandas>=2.2.0",
+    "scikit-learn>=1.5.0",
+    "pyyaml>=6.0.0",
+    "tqdm>=4.66.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "torch>=2.4.0",
+    "torch-geometric>=2.5.0",
+    "transformers>=4.44.0",
+    "sentencepiece>=0.2.0",
+    "safetensors>=0.4.5",
+    "huggingface-hub>=0.25.0",
+    "fair-esm>=2.0.0",
+    "biopython>=1.84",
+    "h5py>=3.11.0",
+    "pyarrow>=17.0.0",
+]
+interpret = [
+    "captum>=0.7.0",
+    "shap>=0.46.0",
+    "matplotlib>=3.9.0",
+    "seaborn>=0.13.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.6.0",
+]
+
+[project.scripts]
+zymebind = "zymebind.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/xiaoniao007-debug/ZymeBind"
+Repository = "https://github.com/xiaoniao007-debug/ZymeBind"
+Issues = "https://github.com/xiaoniao007-debug/ZymeBind/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["zymebind*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

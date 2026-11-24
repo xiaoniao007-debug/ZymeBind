@@ -1,0 +1,35 @@
+name: zymebind
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - pip
+  - foldseek
+  - mmseqs2
+  - cd-hit
+  - pip:
+      - torch==2.5.1
+      - torch-geometric==2.6.1
+      - transformers==4.45.2
+      - tokenizers==0.20.1
+      - sentencepiece==0.2.0
+      - safetensors==0.4.5
+      - huggingface-hub==0.26.2
+      - fair-esm==2.0.0
+      - numpy==1.26.4
+      - pandas==2.2.3
+      - scipy==1.14.1
+      - scikit-learn==1.5.2
+      - pyarrow==17.0.0
+      - h5py==3.12.1
+      - biopython==1.84
+      - networkx==3.4.1
+      - pyyaml==6.0.2
+      - tqdm==4.66.5
+      - requests==2.32.3
+      - captum==0.7.0
+      - shap==0.46.0
+      - matplotlib==3.9.2
+      - seaborn==0.13.2
+      - -e .

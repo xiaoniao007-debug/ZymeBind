@@ -1,0 +1,28 @@
+services:
+  zymebind:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zymebind:1.0.0
+    environment:
+      - HF_HOME=/cache/huggingface
+      - TORCH_HOME=/cache/torch
+    volumes:
+      - ./checkpoints:/app/checkpoints:ro
+      - ./data:/app/data:ro
+      - ./examples:/app/examples:ro
+      - ./outputs:/app/outputs
+      - zymebind_hf_cache:/cache/huggingface
+      - zymebind_torch_cache:/cache/torch
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: ["info"]
+
+volumes:
+  zymebind_hf_cache:
+  zymebind_torch_cache:

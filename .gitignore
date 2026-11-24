@@ -1,0 +1,41 @@
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Model checkpoints, large embeddings, and raw datasets (host on Zenodo / Hugging Face)
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+*.hdf5
+*.npz
+*.npy
+*.parquet
+data/raw/
+data/processed/
+data/splits*/
+logs/
+predictions/
+results/
+
+# OS & editor files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo

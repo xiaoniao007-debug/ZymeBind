@@ -1,0 +1,80 @@
+# ZymeBind 阶段一 + 阶段二训练配置（对应方案 5.1）
+# 硬件适配说明：本机 4×NVIDIA L20 48GB（非 A100 80GB），
+# 因此 batch_size 与梯度累积按 ~1/5 算力下调，编码器默认冻结底层 + LoRA。
+#
+# 训练长度口径（2026-11-08）：epoch 数不是固定超参，由验证曲线决定。
+# 本文件不提供生效的 epochs 值；training_zymebind.py 用
+#   --early-stop-patience / --max-epochs / --min-epochs
+#   --pretrain-patience / --pretrain-max-epochs / --pretrain-min-epochs
+# 控制自适应停止，显式 --epochs / --pretrain-epochs 则作为固定预算复现旧结果。
+# MoE 专家数、diversity 权重、per-modality 分类头同样由训练脚本命令行控制。
+
+seed: 42
+device: cuda
+dtype: bf16          # L20 为 Ada 架构，支持 bf16
+
+paths:
+  root: .
+  data: ${root}/data/processed
+  splits: ${root}/data/splits
+  ckpt: ${root}/checkpoints
+  log: ${root}/logs
+
+model:
+  sequence:
+    name: facebook/esm2_t33_650M_UR50D
+    dim: 1280
+    freeze_layers: 24          # 前 24 层冻结，后 9 层 + LoRA 微调
+    lora_r: 8
+    lora_alpha: 16
+  structure:
+    name: Rostlab/ProstT5
+    dim: 1024
+    freeze: true               # 3Di 编码器全程冻结
+    pool: mean
+  text:
+    name: microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext
+    dim: 768
+    freeze: true
+    max_len: 512
+  domain:
+    embedding_dim: 256
+    gnn_layers: 2
+    gnn_hidden: 256
+  ec_ontology:
+    embedding_dim: 256
+    gnn_layers: 2
+  fusion:
+    out_dim: 512
+    n_heads: 8
+    dropout: 0.1
+  projection_dim: 256
+  temperature: 0.2
+
+pretrain:
+  # epochs: 160  # 计划参考上限，非固定值；实际停止由 --pretrain-patience 决定
+  batch_size: 32               # 单卡；4 卡 + 梯度累积 2 => 等效 256
+  grad_accum: 2
+  lr: 1.0e-4
+  weight_decay: 0.01
+  warmup_ratio: 0.05
+  max_seq_len: 1024
+  num_workers: 8
+  grad_checkpointing: true
+  deepspeed: zero2
+
+finetune:
+  # epochs: 60   # 计划参考上限，非固定值；实际停止由 --early-stop-patience 决定
+  batch_size: 64
+  grad_accum: 1
+  lr: 1.0e-4
+  focal_gamma: 2.0
+  focal_alpha: 0.25
+  label_smoothing: 0.05
+  use_concept_bottleneck: true
+  concept_weight: 0.3          # 概念层辅助损失权重
+
+eval:
+  top_k: [1, 3, 5, 10]
+  thresholds: [0.01, 0.02, 0.03, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50]
+  benchmarks: [new392, price149]

@@ -1,0 +1,16 @@
+.git
+.gitignore
+__pycache__
+*.py[cod]
+.pytest_cache
+.venv
+venv
+checkpoints
+data/raw
+data/processed
+data/splits*
+outputs
+logs
+predictions
+results
+.DS_Store

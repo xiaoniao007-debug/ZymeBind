@@ -1,0 +1,64 @@
+# ZymeBind 数据构建配置
+# 对应方案 4.1 / 4.2 节
+
+paths:
+  root: .
+  raw: ${root}/data/raw
+  processed: ${root}/data/processed
+  splits: ${root}/data/splits
+  benchmarks: ${root}/evaluation/benchmarks
+
+uniprot:
+  # Swiss-Prot 全量 flat 文件（含 DE EC= 的 ECO 证据码，用于实验证据筛选）
+  flat_url: https://ftp.ebi.ac.uk/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz
+  # 仅保留这些实验证据码标注的 EC 编号（方案 4.2 第 1 步）
+  experimental_eco:
+    - EXP
+    - IDA
+    - IPI
+    - IMP
+    - IGI
+    - IEP
+  # 仅保留完整四级 EC 编号
+  require_full_ec: true
+
+alphafold:
+  # AlphaFold DB 当前为 v6 模型；单文件为未压缩 .pdb
+  # （v6 起不再提供 *.pdb.gz，旧版本号会返回 404/403）
+  url_template: https://alphafold.ebi.ac.uk/files/AF-{acc}-F1-model_v6.pdb
+  api_template: https://alphafold.ebi.ac.uk/api/prediction/{acc}
+  concurrency: 32
+  min_plddt: 50.0        # 低于该值标记为低质量，推理时降级（对应 L2 场景）
+  max_len: 2700          # AlphaFold DB 单链上限
+
+ec_ontology:
+  enzyme_dat_url: https://ftp.expasy.org/databases/enzyme/enzyme.dat
+  # EC 一级类名称（IntEnz/EXPASY 定义）
+  level1_names:
+    "1": Oxidoreductases
+    "2": Transferases
+    "3": Hydrolases
+    "4": Lyases
+    "5": Isomerases
+    "6": Ligases
+    "7": Translocases
+
+splits:
+  # 序列一致性聚类阈值（方案 4.2 第 2 步）
+  identity_thresholds: [0.30, 0.40]
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  seed: 42
+  # 自定义零样本 hold-out（方案 4.4 第 3 条）
+  zeroshot_holdout:
+    level1: ["7"]          # 排除 EC:7（转位酶）整类
+    level2: []             # 可追加如 "3.4"
+
+benchmarks:
+  new392:
+    source: CLEAN
+    n_ec: 177
+  price149:
+    source: CLEAN
+    n_ec: 56
