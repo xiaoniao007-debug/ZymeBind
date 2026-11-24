@@ -10,11 +10,11 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
 authors = [
-    { name = "Chen Chen", email = "nxsfcc@nxnu.edu.cn" },
+    { name = "Chen Chen" },
     { name = "Hongbo Zhou" },
     { name = "Zishang Gao" },
     { name = "Qifu Li" },
-    { name = "Yanshan Tian", email = "tianysh@nxnu.edu.cn" },
+    { name = "Yanshan Tian" },
 ]
 keywords = [
     "enzyme-function-prediction",

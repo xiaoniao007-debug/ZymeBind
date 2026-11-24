@@ -213,18 +213,6 @@ ZymeBind/
 
 ---
 
-## Authors & Contact
-
-- **Chen Chen**\* (`nxsfcc@nxnu.edu.cn`) — School of Mathematics and Computer Science, Ningxia Normal University, Guyuan, China
-- **Hongbo Zhou** — College of Teacher Education, Ningxia University, Yinchuan, China
-- **Zishang Gao** — School of Mathematics and Computer Science, Ningxia Normal University, Guyuan, China
-- **Qifu Li** — School of Mathematics and Computer Science, Ningxia Normal University, Guyuan, China
-- **Yanshan Tian**\* (`tianysh@nxnu.edu.cn`) — School of Mathematics and Computer Science, Ningxia Normal University, Guyuan, China
-
-\* Corresponding authors.
-
----
-
 ## Citation
 
 If you use ZymeBind in your research, please cite:
