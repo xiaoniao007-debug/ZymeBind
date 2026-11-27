@@ -204,9 +204,6 @@ ZymeBind/
 │   ├── training/                  # Two-stage training pipeline (Stage 1 contrastive + Stage 2 EMA/KD/ASL)
 │   ├── interpretability/          # L1 active-site masking/IG, L2 Shapley, L3 Top-K SAE
 │   └── evaluation/                # CAFA hierarchical metrics, Fmax/AUPR/Macro-F1, multi-view evaluation
-├── scripts/
-│   ├── reproducibility/           # Blind-test, metagenome, partial-EC, DMS, and pathway-hole scripts
-│   └── figures/                   # Main/Supplementary figure and LaTeX table generation scripts
 └── tests/
     └── test_cli_and_model.py      # CLI and I/O unit tests
 ```
