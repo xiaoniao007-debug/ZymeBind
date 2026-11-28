@@ -91,7 +91,7 @@ def run_zeroshot(
 
     with torch.no_grad():
         ec_emb = F.normalize(ec_encoder(edge_index), dim=-1)
-        z_prot = F.normalize(stage1.encode(feats), dim=-1)
+        z_prot = F.normalize(stage1.encode_query(feats), dim=-1)
         sims = (z_prot @ ec_emb.T).cpu()
 
     # Restrict retrieval ranking to 4th-level EC4 nodes (a.b.c.d with no wildcards)

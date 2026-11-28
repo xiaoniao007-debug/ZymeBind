@@ -206,7 +206,7 @@ def main():
     ap.add_argument("--hidden-dim", type=int, default=1536)
     ap.add_argument("--n-heads", type=int, default=12)
     ap.add_argument("--n-layers", type=int, default=3)
-    ap.add_argument("--gcn-layers", type=int, default=2)
+    ap.add_argument("--gcn-layers", type=int, default=0)
     ap.add_argument("--moe-experts", type=int, default=3)
     ap.add_argument("--diversity-weight", type=float, default=0.05)
     ap.add_argument("--temperature", type=float, default=0.15)

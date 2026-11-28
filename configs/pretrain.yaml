@@ -1,3 +1,10 @@
+# NOTE: Legacy v1 configuration template retained for reference only.
+# The final Nature Communications v4.5 paper defaults (fusion_dim=768, n_layers=3,
+# n_heads=12, dropout=0.20, batch_size=512, lr=3e-4, ASL gamma_neg=4.0, clip=0.05,
+# kd_weight=0.5, feat_kd_weight=0.5, permod_weight=0.5, domain_drop=0.25,
+# ema_decay=0.995, BioBERT dmis-lab/biobert-v1.1) are defined as CLI defaults in
+# zymebind/training/training_zymebind_v45_valonly.py.
+#
 # ZymeBind 阶段一 + 阶段二训练配置（对应方案 5.1）
 # 硬件适配说明：本机 4×NVIDIA L20 48GB（非 A100 80GB），
 # 因此 batch_size 与梯度累积按 ~1/5 算力下调，编码器默认冻结底层 + LoRA。

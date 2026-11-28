@@ -16,7 +16,7 @@ Real-world enzyme annotation routinely encounters incomplete input modalities (f
 2. **Presence-Aware Modality Fusion**: Detects absent modalities explicitly and masks them with $-\infty$ attention weights (`src_key_padding_mask`), preventing zero-vector dilution during cross-modal self-attention.
 3. **Modality-Specific Auxiliary Heads & Presence-Weighted Ensemble Prediction**: Combines a fused multimodal head with four modality-specific auxiliary heads via a presence-gated softmax ensemble, trained under structured modality dropout, cross-modal knowledge distillation, Asymmetric Loss (ASL), and exponential moving average (EMA) weight smoothing.
 4. **Two-Stage Semantic Ontology Alignment & L1/L2/L3 Interpretability**:
-   - **Stage 1 (Zero-Shot EC Retrieval)**: Aligns enzyme embeddings to BioBERT-initialized, two-layer EC DAG graph convolutional prototypes on an $\ell_2$-normalized hypersphere for unseen fourth-level EC4 retrieval.
+   - **Stage 1 (Zero-Shot EC Retrieval)**: Aligns enzyme embeddings directly to BioBERT-encoded ExPASy catalytic reaction prototypes on an $\ell_2$-normalized hypersphere for unseen fourth-level EC4 retrieval without ontology GCN smoothing (an optional `--gcn-layers 2` flag is retained for ablation).
    - **L1 / L2 / L3 Mechanistic Interpretability**: Residue-level catalytic-site masking and Integrated Gradients (L1), exact $2^4 = 16$ coalition Shapley modality attribution (L2), and Top-$K$ Sparse Autoencoder (SAE) catalytic motif discovery (L3).
 
 ---
@@ -193,7 +193,7 @@ ZymeBind/
 ├── pyproject.toml                 # Package metadata & `zymebind` CLI entry point
 ├── requirements.txt               # Pip requirements
 ├── environment.yml                # Conda environment (Python 3.10 + Foldseek + MMseqs2)
-├── configs/                       # Default data and model YAML configurations
+├── configs/                       # Legacy v1 YAML template (v4.5 paper defaults live in training_zymebind_v45_valonly.py)
 ├── examples/
 │   └── sample_enzymes.fasta       # Example enzyme sequences (TEM-1, DHFR, TIM)
 ├── zymebind/
@@ -216,7 +216,7 @@ If you use ZymeBind in your research, please cite:
 
 ```bibtex
 @article{chen2026zymebind,
-  title   = {ZymeBind: Presence-Aware Multimodal Learning for Enzyme Function Prediction, Zero-Shot EC Retrieval, and Mechanistic Interpretability},
+  title   = {Presence-aware multimodal learning for interpretable enzyme function annotation},
   author  = {Chen, Chen and Zhou, Hongbo and Gao, Zishang and Li, Qifu and Tian, Yanshan},
   year    = {2026},
   note    = {Manuscript submitted for publication}
